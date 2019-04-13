@@ -1,4 +1,4 @@
 !*.py
 !NotPython/*.c
 !*/*.txt
-.vscode
+.vscode/
