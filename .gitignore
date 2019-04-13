@@ -1,3 +1,4 @@
 !*.py
 !NotPython/*.c
 !*/*.txt
+.vscode
