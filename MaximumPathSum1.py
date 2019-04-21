@@ -1,9 +1,12 @@
 temp = []
 
-with open("triangle.txt") as file:
-    for line in file:
-        line = line.rstrip("\n")
-        temp.append(line)
+try:
+    with open("triangle.txt") as file:
+        for line in file:
+            line = line.rstrip("\n")
+            temp.append(line)
+except Exception:
+    print("Something went wrong while loading triangle")
 
 triangle = []
 
