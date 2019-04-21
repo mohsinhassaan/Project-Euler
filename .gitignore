@@ -1,0 +1,4 @@
+.vscode/
+NotPython/*
+ssh_key
+ssh_key.pub
