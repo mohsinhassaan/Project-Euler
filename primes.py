@@ -1,6 +1,5 @@
 from math import log
 
-
 cache = set()
 
 
@@ -18,20 +17,13 @@ def load_primes(f):
     return pset
 
 
-def primes(upper_bound, old=cache, only_new=False):
+def primes(upper_bound):
     """Returns set of primes less than n"""
+    global cache
     lower_bound = 2
-    if type(old) == set:
-        prime_set = new_primes(upper_bound, old, lower_bound)
-        if not only_new:
-            prime_set.update(old)
-            old = prime_set
-    elif old == set():
-        prime_set = set(x for x in range(lower_bound, upper_bound))
-        for i in range(lower_bound, upper_bound):
-            prime_set = remove_multiples(i, prime_set, upper_bound)
-    else:
-        raise TypeError('old must be of type "set"')
+    prime_set = new_primes(upper_bound, cache, lower_bound)
+    prime_set.update(cache)
+    cache = prime_set
 
     return prime_set
 
@@ -116,8 +108,4 @@ def is_prime(n):
 
     prime_set = primes(n + 1)
     return n in prime_set
-
-
-if __name__ == "__main__":
-    print(primes(100))
 
