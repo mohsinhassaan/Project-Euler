@@ -1,13 +1,7 @@
 from math import log
 
 
-def main():
-    old = load_primes("primes.csv")
-
-    new = primes(10000000, old, True)
-    with open("primes.csv", "a") as file:
-        for prime in sorted(new):
-            file.write(str(prime) + ",\n")
+cache = set()
 
 
 def load_primes(f):
@@ -24,14 +18,15 @@ def load_primes(f):
     return pset
 
 
-def primes(upper_bound, old=None, only_new=False):
+def primes(upper_bound, old=cache, only_new=False):
     """Returns set of primes less than n"""
     lower_bound = 2
     if type(old) == set:
         prime_set = new_primes(upper_bound, old, lower_bound)
         if not only_new:
-            prime_set = prime_set.union(old)
-    elif old == None:
+            prime_set.update(old)
+            old = prime_set
+    elif old == set():
         prime_set = set(x for x in range(lower_bound, upper_bound))
         for i in range(lower_bound, upper_bound):
             prime_set = remove_multiples(i, prime_set, upper_bound)
@@ -82,6 +77,8 @@ def get_primes(lower_bound, upper_bound, old):
         prime_set = remove_multiples(prime, prime_set, upper_bound)
 
     for i in range(lower_bound, upper_bound):
+        if i ** 2 > upper_bound:
+            break
         if i in prime_set:
             prime_set = remove_multiples(i, prime_set, upper_bound)
 
@@ -122,4 +119,5 @@ def is_prime(n):
 
 
 if __name__ == "__main__":
-    main()
+    print(primes(100))
+
